@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import Logo from '../../images/logo/logo.svg';
+import ImprintX from '../../images/logo/ImprintX.svg';
+import VersionTag from './VersionTag';
+import NumberTag from './NumberTag';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -17,7 +19,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
   // close on click outside
@@ -63,9 +65,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+      <div className="flex items-center justify-between gap-2 px-10 py-5.5 lg:py-6.5">
         <NavLink to="/">
-          <img src={Logo} alt="Logo" />
+          <img src={ImprintX} alt="Logo" />
         </NavLink>
 
         <button
@@ -176,16 +178,63 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                          <li>
+                          <li className="flex justify-between px-4">
                             <NavLink
                               to="/"
                               className={({ isActive }) =>
-                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
                               }
                             >
                               eCommerce
                             </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/dashboard/analytics"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Analytics
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/dashboard/data-request"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Data Request
+                            </NavLink>
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/dashboard/marketing"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Marketing
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/dashboard/crm"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              CRM
+                            </NavLink>
+                            <VersionTag />
                           </li>
                         </ul>
                       </div>
@@ -252,6 +301,119 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               {/* <!-- Menu Item Profile --> */}
+
+              {/* <!-- Menu Item Task --> */}
+              <SidebarLinkGroup
+                activeCondition={
+                  pathname === '/task' || pathname.includes('task')
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <NavLink
+                        to="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === '/task' || pathname.includes('task')) &&
+                          'bg-graydark dark:bg-meta-4'
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="19"
+                          viewBox="0 0 18 19"
+                          fill="none"
+                        >
+                          <path
+                            d="M3.45928 1.7666H1.6874C1.04053 1.7666 0.478027 2.30098 0.478027 2.97598V4.74785C0.478027 5.39473 1.0124 5.95723 1.6874 5.95723H3.45928C4.10615 5.95723 4.66865 5.42285 4.66865 4.74785V2.94785C4.64053 2.30098 4.10615 1.7666 3.45928 1.7666ZM3.3749 4.66348H1.77178V3.03223H3.3749V4.66348Z"
+                            fill="#DEE4EE"
+                          />
+                          <path
+                            d="M7.22793 4.49492H16.8748C17.2123 4.49492 17.5217 4.21367 17.5217 3.84805C17.5217 3.48242 17.2404 3.20117 16.8748 3.20117H7.22793C6.89043 3.20117 6.58105 3.48242 6.58105 3.84805C6.58105 4.21367 6.89043 4.49492 7.22793 4.49492Z"
+                            fill="#DEE4EE"
+                          />
+                          <path
+                            d="M3.45928 7.53223H1.6874C1.04053 7.53223 0.478027 8.0666 0.478027 8.7416V10.5135C0.478027 11.1604 1.0124 11.7229 1.6874 11.7229H3.45928C4.10615 11.7229 4.66865 11.1885 4.66865 10.5135V8.7416C4.64053 8.0666 4.10615 7.53223 3.45928 7.53223ZM3.3749 10.4291H1.77178V8.79785H3.3749V10.4291Z"
+                            fill="#DEE4EE"
+                          />
+                          <path
+                            d="M16.8748 8.99512H7.22793C6.89043 8.99512 6.58105 9.27637 6.58105 9.64199C6.58105 10.0076 6.86231 10.2607 7.22793 10.2607H16.8748C17.2123 10.2607 17.5217 9.97949 17.5217 9.64199C17.5217 9.30449 17.2123 8.99512 16.8748 8.99512Z"
+                            fill="#DEE4EE"
+                          />
+                          <path
+                            d="M3.45928 13.6357H1.6874C1.04053 13.6357 0.478027 14.1701 0.478027 14.8451V16.617C0.478027 17.2639 1.0124 17.8264 1.6874 17.8264H3.45928C4.10615 17.8264 4.66865 17.292 4.66865 16.617V14.8451C4.64053 14.1701 4.10615 13.6357 3.45928 13.6357ZM3.3749 16.5326H1.77178V14.9014H3.3749V16.5326Z"
+                            fill="#DEE4EE"
+                          />
+                          <path
+                            d="M16.8748 15.0693H7.22793C6.89043 15.0693 6.58105 15.3506 6.58105 15.7162C6.58105 16.0818 6.86231 16.3631 7.22793 16.3631H16.8748C17.2123 16.3631 17.5217 16.0818 17.5217 15.7162C17.5217 15.3506 17.2123 15.0693 16.8748 15.0693Z"
+                            fill="#DEE4EE"
+                          />
+                        </svg>
+                        Task
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && 'rotate-180'
+                          }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </NavLink>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${
+                          !open && 'hidden'
+                        }`}
+                      >
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/task/list"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              List
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/task/kanban"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Kanban
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+              {/* <!-- Menu Item Task --> */}
 
               {/* <!-- Menu Item Forms --> */}
               <SidebarLinkGroup
@@ -353,6 +515,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Form Layout
                             </NavLink>
                           </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/forms/form-validation"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Form Validation
+                            </NavLink>
+                            <VersionTag />
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -400,48 +574,311 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Tables --> */}
 
-              {/* <!-- Menu Item Settings --> */}
+              {/* <!-- Menu Item Pages --> */}
+              <SidebarLinkGroup
+                activeCondition={
+                  pathname === '/pages' || pathname.includes('pages')
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <NavLink
+                        to="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === '/pages' ||
+                            pathname.includes('pages')) &&
+                          'bg-graydark dark:bg-meta-4'
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="19"
+                          viewBox="0 0 18 19"
+                          fill="none"
+                        >
+                          <g clip-path="url(#clip0_2904_5875)">
+                            <path
+                              d="M14.2875 1.28857H3.7125C2.75625 1.28857 1.96875 2.07607 1.96875 3.03232V16.5323C1.96875 17.4886 2.75625 18.3042 3.74063 18.3042H14.3156C15.2719 18.3042 16.0875 17.5167 16.0875 16.5323V3.03232C16.0313 2.07607 15.2438 1.28857 14.2875 1.28857ZM14.7656 16.5323C14.7656 16.8136 14.5406 17.0386 14.2594 17.0386H3.7125C3.43125 17.0386 3.20625 16.8136 3.20625 16.5323V3.03232C3.20625 2.75107 3.43125 2.52607 3.7125 2.52607H14.2875C14.5688 2.52607 14.7938 2.75107 14.7938 3.03232V16.5323H14.7656Z"
+                              fill="#DEE4EE"
+                            />
+                            <path
+                              d="M12.797 3.39795H9.73135C9.2251 3.39795 8.80322 3.81982 8.80322 4.32607V8.03857C8.80322 8.54482 9.2251 8.9667 9.73135 8.9667H12.797C13.3032 8.9667 13.7251 8.54482 13.7251 8.03857V4.29795C13.697 3.81982 13.3032 3.39795 12.797 3.39795ZM12.4313 7.67295H10.0688V4.66357H12.4313V7.67295Z"
+                              fill="#DEE4EE"
+                            />
+                            <path
+                              d="M4.97822 5.1416H7.03135C7.36885 5.1416 7.67822 4.86035 7.67822 4.49473C7.67822 4.1291 7.39697 3.87598 7.03135 3.87598H4.9501C4.6126 3.87598 4.30322 4.15723 4.30322 4.52285C4.30322 4.88848 4.6126 5.1416 4.97822 5.1416Z"
+                              fill="#DEE4EE"
+                            />
+                            <path
+                              d="M4.97822 8.71367H7.03135C7.36885 8.71367 7.67822 8.43242 7.67822 8.0668C7.67822 7.70117 7.39697 7.41992 7.03135 7.41992H4.9501C4.6126 7.41992 4.30322 7.70117 4.30322 8.0668C4.30322 8.43242 4.6126 8.71367 4.97822 8.71367Z"
+                              fill="#DEE4EE"
+                            />
+                            <path
+                              d="M13.0782 11.02H4.97817C4.64067 11.02 4.3313 11.3013 4.3313 11.6669C4.3313 12.0325 4.61255 12.3138 4.97817 12.3138H13.0782C13.4157 12.3138 13.725 12.0325 13.725 11.6669C13.725 11.3013 13.4157 11.02 13.0782 11.02Z"
+                              fill="#DEE4EE"
+                            />
+                            <path
+                              d="M13.0782 14.5918H4.97817C4.64067 14.5918 4.3313 14.873 4.3313 15.2387C4.3313 15.6043 4.61255 15.8855 4.97817 15.8855H13.0782C13.4157 15.8855 13.725 15.6043 13.725 15.2387C13.725 14.873 13.4157 14.5918 13.0782 14.5918Z"
+                              fill="#DEE4EE"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_2904_5875">
+                              <rect
+                                width="18"
+                                height="18"
+                                fill="white"
+                                transform="translate(0 0.782227)"
+                              />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                        Pages
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && 'rotate-180'
+                          }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </NavLink>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${
+                          !open && 'hidden'
+                        }`}
+                      >
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/settings"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Settings
+                            </NavLink>
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/pages/file-manager"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              File Manager
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/pages/data-tables"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Data Tables
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/pages/pricing-tables"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Pricing Tables
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/pages/error-page"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Error Page
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/pages/mail-success"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Mail Success
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+              {/* <!-- Menu Item Pages --> */}
+            </ul>
+          </div>
+
+          {/* <!-- Support Group --> */}
+          <div>
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+              SUPPORT
+            </h3>
+
+            <ul className="mb-6 flex flex-col gap-1.5">
+              {/* <!-- Menu Item Messages --> */}
               <li>
                 <NavLink
-                  to="/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
+                  to="/messages"
+                  className={`group relative flex items-center justify-between rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('chart') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <svg
-                    className="fill-current"
-                    width="18"
-                    height="19"
-                    viewBox="0 0 18 19"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clipPath="url(#clip0_130_9763)">
+                  <div className="flex items-center justify-center gap-2.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="19"
+                      viewBox="0 0 18 19"
+                      fill="none"
+                    >
                       <path
-                        d="M17.0721 7.30835C16.7909 6.99897 16.3971 6.83022 15.9752 6.83022H15.8909C15.7502 6.83022 15.6377 6.74585 15.6096 6.63335C15.5815 6.52085 15.5252 6.43647 15.4971 6.32397C15.4409 6.21147 15.4971 6.09897 15.5815 6.0146L15.6377 5.95835C15.9471 5.6771 16.1159 5.28335 16.1159 4.86147C16.1159 4.4396 15.9752 4.04585 15.6659 3.73647L14.569 2.61147C13.9784 1.99272 12.9659 1.9646 12.3471 2.58335L12.2627 2.6396C12.1784 2.72397 12.0377 2.7521 11.8971 2.69585C11.7846 2.6396 11.6721 2.58335 11.5315 2.55522C11.3909 2.49897 11.3065 2.38647 11.3065 2.27397V2.13335C11.3065 1.26147 10.6034 0.55835 9.73148 0.55835H8.15648C7.7346 0.55835 7.34085 0.7271 7.0596 1.00835C6.75023 1.31772 6.6096 1.71147 6.6096 2.10522V2.21772C6.6096 2.33022 6.52523 2.44272 6.41273 2.49897C6.35648 2.5271 6.32835 2.5271 6.2721 2.55522C6.1596 2.61147 6.01898 2.58335 5.9346 2.49897L5.87835 2.4146C5.5971 2.10522 5.20335 1.93647 4.78148 1.93647C4.3596 1.93647 3.96585 2.0771 3.65648 2.38647L2.53148 3.48335C1.91273 4.07397 1.8846 5.08647 2.50335 5.70522L2.5596 5.7896C2.64398 5.87397 2.6721 6.0146 2.61585 6.09897C2.5596 6.21147 2.53148 6.29585 2.47523 6.40835C2.41898 6.52085 2.3346 6.5771 2.19398 6.5771H2.1096C1.68773 6.5771 1.29398 6.71772 0.984604 7.0271C0.675229 7.30835 0.506479 7.7021 0.506479 8.12397L0.478354 9.69897C0.450229 10.5708 1.15335 11.274 2.02523 11.3021H2.1096C2.25023 11.3021 2.36273 11.3865 2.39085 11.499C2.4471 11.5833 2.50335 11.6677 2.53148 11.7802C2.5596 11.8927 2.53148 12.0052 2.4471 12.0896L2.39085 12.1458C2.08148 12.4271 1.91273 12.8208 1.91273 13.2427C1.91273 13.6646 2.05335 14.0583 2.36273 14.3677L3.4596 15.4927C4.05023 16.1115 5.06273 16.1396 5.68148 15.5208L5.76585 15.4646C5.85023 15.3802 5.99085 15.3521 6.13148 15.4083C6.24398 15.4646 6.35648 15.5208 6.4971 15.549C6.63773 15.6052 6.7221 15.7177 6.7221 15.8302V15.9427C6.7221 16.8146 7.42523 17.5177 8.2971 17.5177H9.8721C10.744 17.5177 11.4471 16.8146 11.4471 15.9427V15.8302C11.4471 15.7177 11.5315 15.6052 11.644 15.549C11.7002 15.5208 11.7284 15.5208 11.7846 15.4927C11.9252 15.4365 12.0377 15.4646 12.1221 15.549L12.1784 15.6333C12.4596 15.9427 12.8534 16.1115 13.2752 16.1115C13.6971 16.1115 14.0909 15.9708 14.4002 15.6615L15.5252 14.5646C16.144 13.974 16.1721 12.9615 15.5534 12.3427L15.4971 12.2583C15.4127 12.174 15.3846 12.0333 15.4409 11.949C15.4971 11.8365 15.5252 11.7521 15.5815 11.6396C15.6377 11.5271 15.7502 11.4708 15.8627 11.4708H15.9471H15.9752C16.819 11.4708 17.5221 10.7958 17.5502 9.92397L17.5784 8.34897C17.5221 8.01147 17.3534 7.5896 17.0721 7.30835ZM16.2284 9.9521C16.2284 10.1208 16.0877 10.2615 15.919 10.2615H15.8346H15.8065C15.1596 10.2615 14.569 10.6552 14.344 11.2177C14.3159 11.3021 14.2596 11.3865 14.2315 11.4708C13.9784 12.0333 14.0909 12.7365 14.5409 13.1865L14.5971 13.2708C14.7096 13.3833 14.7096 13.5802 14.5971 13.6927L13.4721 14.7896C13.3877 14.874 13.3034 14.874 13.2471 14.874C13.1909 14.874 13.1065 14.874 13.0221 14.7896L12.9659 14.7052C12.5159 14.2271 11.8409 14.0865 11.2221 14.3677L11.1096 14.424C10.4909 14.6771 10.0971 15.2396 10.0971 15.8865V15.999C10.0971 16.1677 9.95648 16.3083 9.78773 16.3083H8.21273C8.04398 16.3083 7.90335 16.1677 7.90335 15.999V15.8865C7.90335 15.2396 7.5096 14.649 6.89085 14.424C6.80648 14.3958 6.69398 14.3396 6.6096 14.3115C6.3846 14.199 6.1596 14.1708 5.9346 14.1708C5.54085 14.1708 5.1471 14.3115 4.83773 14.6208L4.78148 14.649C4.66898 14.7615 4.4721 14.7615 4.3596 14.649L3.26273 13.524C3.17835 13.4396 3.17835 13.3552 3.17835 13.299C3.17835 13.2427 3.17835 13.1583 3.26273 13.074L3.31898 13.0177C3.7971 12.5677 3.93773 11.8646 3.6846 11.3021C3.65648 11.2177 3.62835 11.1333 3.5721 11.049C3.3471 10.4583 2.7846 10.0365 2.13773 10.0365H2.05335C1.8846 10.0365 1.74398 9.89585 1.74398 9.7271L1.7721 8.1521C1.7721 8.0396 1.82835 7.98335 1.85648 7.9271C1.8846 7.89897 1.96898 7.84272 2.08148 7.84272H2.16585C2.81273 7.87085 3.40335 7.4771 3.65648 6.88647C3.6846 6.8021 3.74085 6.71772 3.76898 6.63335C4.0221 6.07085 3.9096 5.36772 3.4596 4.91772L3.40335 4.83335C3.29085 4.72085 3.29085 4.52397 3.40335 4.41147L4.52835 3.3146C4.61273 3.23022 4.6971 3.23022 4.75335 3.23022C4.8096 3.23022 4.89398 3.23022 4.97835 3.3146L5.0346 3.39897C5.4846 3.8771 6.1596 4.01772 6.77835 3.7646L6.89085 3.70835C7.5096 3.45522 7.90335 2.89272 7.90335 2.24585V2.13335C7.90335 2.02085 7.9596 1.9646 7.98773 1.90835C8.01585 1.8521 8.10023 1.82397 8.21273 1.82397H9.78773C9.95648 1.82397 10.0971 1.9646 10.0971 2.13335V2.24585C10.0971 2.89272 10.4909 3.48335 11.1096 3.70835C11.194 3.73647 11.3065 3.79272 11.3909 3.82085C11.9815 4.1021 12.6846 3.9896 13.1627 3.5396L13.2471 3.48335C13.3596 3.37085 13.5565 3.37085 13.669 3.48335L14.7659 4.60835C14.8502 4.69272 14.8502 4.7771 14.8502 4.83335C14.8502 4.8896 14.8221 4.97397 14.7659 5.05835L14.7096 5.1146C14.2034 5.53647 14.0627 6.2396 14.2877 6.8021C14.3159 6.88647 14.344 6.97085 14.4002 7.05522C14.6252 7.64585 15.1877 8.06772 15.8346 8.06772H15.919C16.0315 8.06772 16.0877 8.12397 16.144 8.1521C16.2002 8.18022 16.2284 8.2646 16.2284 8.3771V9.9521Z"
-                        fill=""
+                        d="M15.7499 3.48242H2.2499C1.29365 3.48242 0.478027 4.26992 0.478027 5.2543V14.3668C0.478027 15.323 1.26553 16.1387 2.2499 16.1387H15.7499C16.7062 16.1387 17.5218 15.3512 17.5218 14.3668V5.22617C17.5218 4.26992 16.7062 3.48242 15.7499 3.48242ZM15.7499 4.74805C15.778 4.74805 15.8062 4.74805 15.8343 4.74805L8.9999 9.13555L2.16553 4.74805C2.19365 4.74805 2.22178 4.74805 2.2499 4.74805H15.7499ZM15.7499 14.8168H2.2499C1.96865 14.8168 1.74365 14.5918 1.74365 14.3105V5.98555L8.3249 10.2043C8.52178 10.3449 8.74678 10.4012 8.97178 10.4012C9.19678 10.4012 9.42178 10.3449 9.61865 10.2043L16.1999 5.98555V14.3387C16.2562 14.6199 16.0312 14.8168 15.7499 14.8168Z"
+                        fill="#DEE4EE"
                       />
-                      <path
-                        d="M9.00029 5.22705C6.89092 5.22705 5.17529 6.94268 5.17529 9.05205C5.17529 11.1614 6.89092 12.8771 9.00029 12.8771C11.1097 12.8771 12.8253 11.1614 12.8253 9.05205C12.8253 6.94268 11.1097 5.22705 9.00029 5.22705ZM9.00029 11.6114C7.59404 11.6114 6.44092 10.4583 6.44092 9.05205C6.44092 7.6458 7.59404 6.49268 9.00029 6.49268C10.4065 6.49268 11.5597 7.6458 11.5597 9.05205C11.5597 10.4583 10.4065 11.6114 9.00029 11.6114Z"
-                        fill=""
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_130_9763">
-                        <rect
-                          width="18"
-                          height="18"
-                          fill="white"
-                          transform="translate(0 0.052124)"
-                        />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  Settings
+                    </svg>
+                    Messages
+                  </div>
+                  <NumberTag />
                 </NavLink>
               </li>
-              {/* <!-- Menu Item Settings --> */}
+              {/* <!-- Menu Item Messages --> */}
+
+              {/* <!-- Menu Item Inbox --> */}
+              <li>
+                <NavLink
+                  to="/inbox"
+                  className={`group relative flex items-center justify-between rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('chart') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="16"
+                      viewBox="0 0 18 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M16.8749 6.179C16.5374 6.179 16.228 6.46025 16.228 6.82588V12.1134C16.228 13.2103 15.4124 14.0821 14.3999 14.0821H3.5999C2.55928 14.0821 1.77178 13.2103 1.77178 12.1134V6.79775C1.77178 6.46025 1.49053 6.15088 1.1249 6.15088C0.759277 6.15088 0.478027 6.43213 0.478027 6.79775V12.0853C0.478027 13.8571 1.85615 15.3196 3.57178 15.3196H14.3999C16.1155 15.3196 17.4937 13.8853 17.4937 12.0853V6.79775C17.5218 6.46025 17.2124 6.179 16.8749 6.179Z"
+                        fill="#DEE4EE"
+                      />
+                      <path
+                        d="M8.5498 10.3696C8.6623 10.4821 8.83105 10.5665 8.9998 10.5665C9.16855 10.5665 9.30918 10.5103 9.4498 10.3696L12.8811 6.9665C13.1342 6.71338 13.1342 6.31963 12.8811 6.0665C12.6279 5.81338 12.2342 5.81338 11.9811 6.0665L9.64668 8.37275V0.891504C9.64668 0.554004 9.36543 0.244629 8.9998 0.244629C8.6623 0.244629 8.35293 0.525879 8.35293 0.891504V8.429L6.01855 6.09463C5.76543 5.8415 5.37168 5.8415 5.11855 6.09463C4.86543 6.34775 4.86543 6.7415 5.11855 6.99463L8.5498 10.3696Z"
+                        fill="#DEE4EE"
+                      />
+                    </svg>
+                    Inbox
+                  </div>
+                  <VersionTag />
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item Inbox --> */}
+
+              {/* <!-- Menu Item Invoice --> */}
+              <li>
+                <NavLink
+                  to="/invoice"
+                  className={`group relative flex items-center justify-between rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('chart') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="19"
+                      viewBox="0 0 18 19"
+                      fill="none"
+                    >
+                      <g clip-path="url(#clip0_2904_5757)">
+                        <path
+                          d="M15.8343 3.229C15.8343 2.16025 14.9624 1.26025 13.8655 1.26025H4.13428C3.06553 1.26025 2.16553 2.13213 2.16553 3.229V17.3478C2.16553 17.5728 2.30615 17.7978 2.50303 17.9103C2.6999 18.0228 2.95303 17.9946 3.1499 17.8821L4.55615 16.954L6.44053 18.1915C6.66553 18.3321 6.91865 18.3321 7.14365 18.1915L8.9999 16.954L10.8562 18.1915C10.9687 18.2759 11.0812 18.304 11.1937 18.304C11.3062 18.304 11.4468 18.2759 11.5312 18.1915L13.3874 16.954L14.7937 17.9103C14.9905 18.0509 15.2437 18.0509 15.4405 17.9384C15.6374 17.8259 15.778 17.6009 15.778 17.3759L15.8343 3.229ZM14.0343 15.829C13.6687 15.5759 13.1905 15.5759 12.8249 15.829L11.2218 16.8978L9.61865 15.829C9.42178 15.7165 9.2249 15.6321 8.9999 15.6321C8.80303 15.6321 8.57803 15.6884 8.40928 15.829L6.80615 16.8978L5.20303 15.829C4.8374 15.5759 4.35928 15.5759 3.99365 15.829L3.45928 16.1665V3.229C3.45928 2.83525 3.76865 2.52588 4.1624 2.52588H13.9218C14.3155 2.52588 14.6249 2.83525 14.6249 3.229V16.1665L14.0343 15.829Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M7.93106 4.52295H5.5123C5.1748 4.52295 4.89355 4.8042 4.89355 5.1417C4.89355 5.4792 5.1748 5.76045 5.5123 5.76045H7.93106C8.26856 5.76045 8.54981 5.4792 8.54981 5.1417C8.54981 4.8042 8.26856 4.52295 7.93106 4.52295Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M12.3467 4.52295H11.6717C11.3342 4.52295 11.053 4.8042 11.053 5.1417C11.053 5.4792 11.3342 5.76045 11.6717 5.76045H12.3467C12.6842 5.76045 12.9655 5.4792 12.9655 5.1417C12.9655 4.8042 12.6842 4.52295 12.3467 4.52295Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M5.5123 9.47285H7.05918C7.39668 9.47285 7.67793 9.1916 7.67793 8.8541C7.67793 8.5166 7.39668 8.23535 7.05918 8.23535H5.5123C5.1748 8.23535 4.89355 8.5166 4.89355 8.8541C4.89355 9.1916 5.14668 9.47285 5.5123 9.47285Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M12.3467 8.20703H11.6717C11.3342 8.20703 11.053 8.48828 11.053 8.82578C11.053 9.16328 11.3342 9.44453 11.6717 9.44453H12.3467C12.6842 9.44453 12.9655 9.16328 12.9655 8.82578C12.9655 8.48828 12.6842 8.20703 12.3467 8.20703Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M7.93106 11.8633H5.5123C5.1748 11.8633 4.89355 12.1445 4.89355 12.482C4.89355 12.8195 5.1748 13.1008 5.5123 13.1008H7.93106C8.26856 13.1008 8.54981 12.8195 8.54981 12.482C8.54981 12.1445 8.26856 11.8633 7.93106 11.8633Z"
+                          fill="#DEE4EE"
+                        />
+                        <path
+                          d="M12.3467 11.8633H11.6717C11.3342 11.8633 11.053 12.1445 11.053 12.482C11.053 12.8195 11.3342 13.1008 11.6717 13.1008H12.3467C12.6842 13.1008 12.9655 12.8195 12.9655 12.482C12.9655 12.1445 12.6842 11.8633 12.3467 11.8633Z"
+                          fill="#DEE4EE"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2904_5757">
+                          <rect
+                            width="18"
+                            height="18"
+                            fill="white"
+                            transform="translate(0 0.782227)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    Invoice
+                  </div>
+                  <VersionTag />
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item Invoice --> */}
             </ul>
           </div>
 
@@ -595,6 +1032,198 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Buttons
                             </NavLink>
                           </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/buttons-group"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Button Group
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/badge"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Badge
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/breadcrumb"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Breadcrumb
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/cards"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Cards
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/dropdowns"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Dropdowns
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/modals"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Modals
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/tabs"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Tabs
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/tooltips"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Tooltips
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/popovers"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Popovers
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/accordion"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Accordion
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/notifications"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Notifications
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/pagination"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Pagination
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/progress"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Progress
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/carousel"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Carousel
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/images"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Images
+                            </NavLink>
+                            <VersionTag />
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/ui/videos"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Videos
+                            </NavLink>
+                            <VersionTag />
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -702,6 +1331,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             >
                               Sign Up
                             </NavLink>
+                          </li>
+                          <li className="flex justify-between px-4">
+                            <NavLink
+                              to="/auth/reset-password"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Reset Password
+                            </NavLink>
+                            <VersionTag />
                           </li>
                         </ul>
                       </div>
